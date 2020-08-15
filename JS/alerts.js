@@ -11,6 +11,7 @@ if(document.getElementById("activityPanel")){
                 var details = document.createElement("div");
 
                 toadd.classList.add("card");
+                toadd.setAttribute("key", feature.id);
                 details.classList.add("card-body");
                 details.innerHTML = "<b>Magnitude: " + feature.properties.mag.toFixed(2) +
                                     "</b><br>" + feature.properties.place + "<br>" + parseTime(feature.properties.time);
@@ -54,6 +55,7 @@ apiInfo(url_hour)
             var dismiss = document.createElement("button");
             newAlert.classList.add("alert", "alert-danger", "alert-dismissible", "fade", "show");
             newAlert.setAttribute("role", "alert");
+            newAlert.setAttribute("key", feature.id);
             if(feature.properties.tsunami == 1) {
                 newAlert.innerHTML = "<strong>TSUNAMI WARNING</strong><p>"+feature.properties.title +"<br/>"+ parseTime(feature.properties.time)+"</p><a href='"+feature.properties.url+"'>More Info</a>";
                 dismiss.setAttribute("type", "button");
