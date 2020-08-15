@@ -1,4 +1,8 @@
 
+
+
+//Initialize map
+//=============================================================================
 //Create blank map container and set zoom
 var map = new L.Map("map", {
     zoomSnap: 0.5,
@@ -9,17 +13,32 @@ var map = new L.Map("map", {
     maxBoundsViscosity: 1.0,
     bounceAtZoomLimits: false,
 })
+
+//Set map area and save center point for returning to center
 map.fitBounds([[70,-160],[-70, 160]]).invalidateSize();
 let ctr = map.getCenter();
 
 //Add map tile to container using Stamen Tile
 var map_layer = new L.StamenTileLayer("toner");
 map.addLayer(map_layer);
+//Add a layer to hold current markers
+var current = L.layerGroup().addTo(map);
 
+//When map is resized, fit the whole globe in bounds
+map.on("resize", function() {
+    if(document.getElementById("locate").classList.contains("active")){
+        return;
+    }
+    map.fitBounds([[70,-160],[-70, 160]]).invalidateSize();
+})
+
+
+
+//Functions for adding markers to map from geoJSON objects
+//=============================================================================
 //Returns magnitude markers and popup details to pointToLayer option
 //when creating geoJSON layer
 //current holds layer on map to be added and removed
-var current = L.layerGroup().addTo(map);
 var addMagMarkers = function(feature, latlng){
     return L.circleMarker(latlng, {
         radius: ((feature.properties.mag**2)/5) + map.getZoom(),
@@ -38,14 +57,42 @@ var addDepthMarkers = function(feature, latlng){
     }).bindPopup("<p><b>"+parseTime(feature.properties.time)+"<br/>Magnitude: "+feature.properties.mag+"<br/>"+feature.properties.place+"</br>Depth: "+feature.geometry.coordinates[2]+"km</b></p>");
 }
 
-//When map is resized, fit the whole globe in bounds
-map.on("resize", function() {
-    if(document.getElementById("locate").classList.contains("active")){
-        return;
+//Used to set marker color in map layer based on magnitude
+function chooseMagColor(value) {
+    switch (true){
+        case value < 3:
+            return "rgb(0, 255, 0)";
+        case value < 6:
+            return "#007bff";
+        case value < 8:
+            return "purple";
+        case value >= 8:
+            return "red";
+        default:
+            console.log(value);
+            return "#000000";
     }
-    map.fitBounds([[70,-160],[-70, 160]]).invalidateSize();
-})
+}
 
+//used to set marker color in map layer based on depth
+function chooseDepthColor(value) {
+    switch(true) {
+        case value <= 70:
+            return "rgb(0, 200, 255)";
+        case value <= 300:
+            return "#0000ff";
+        case value > 300:
+            return "#800080";
+        default:
+            console.log(value);
+            return "#000000";
+    }
+}
+
+
+
+//Adjust marker sizes on zoom in/zoom out
+//=============================================================================
 //Helper function to adjust markers on zoom
 //used by map.on("zoomend", function())
 function markerAdjust(sublayer, zoom, stzoom){
@@ -74,9 +121,10 @@ map.on("zoomend", function() {
     })
 });
 
+
+
 //Default map display 1 day magnitude activity
 //calls USGS api
-var maxLoc = [];
 apiInfo(url_day)
 .then(data => {
     L.geoJSON(data, {
@@ -85,6 +133,10 @@ apiInfo(url_day)
 })
 .catch(reason => console.log(reason.message));
 
+
+
+//Functions to choose day|week|month marker layers
+//=============================================================================
 //onclick event from id="pastMonth"
 //Displays mag or depth based on id=mapTabs selection
 function displayMonth(request = "magnitude") {
@@ -142,7 +194,11 @@ function displayDay(request = "magnitude") {
     .catch(reason => console.log(reason.message));
 }
 
-//onclick event from id=plateTab
+
+
+//Functions to choose magnitude|depth|plates
+//=============================================================================
+//onclick event from id=magTab
 //Adds depth markers to map based on id=toggleBar selection
 //calls {dispayMonth() | displayWeek() | displayDay()}
 function displayDepth() {
@@ -206,6 +262,10 @@ function displayMag() {
     }
 }
 
+
+
+//Functions to control zooming/panning around map
+//=============================================================================
 //onclick event from  id=largest
 //Selects api url based on dropdownButton selection
 //Adds pop-up detail to marker and zooms/pans to location on map
@@ -356,38 +416,6 @@ function zoomToUser() {
         document.getElementById("locate").classList.add("active");
         document.getElementById("locateText").textContent= "Zoom to Earth View";
     });
-}
-
-//Used to set marker color in map layer based on magnitude
-function chooseMagColor(value) {
-    switch (true){
-        case value < 3:
-            return "rgb(0, 255, 0)";
-        case value < 6:
-            return "#007bff";
-        case value < 8:
-            return "purple";
-        case value >= 8:
-            return "red";
-        default:
-            console.log(value);
-            return "#000000";
-    }
-}
-
-//used to set marker color in map layer based on depth
-function chooseDepthColor(value) {
-    switch(true) {
-        case value <= 70:
-            return "rgb(0, 200, 255)";
-        case value <= 300:
-            return "#0000ff";
-        case value > 300:
-            return "#800080";
-        default:
-            console.log(value);
-            return "#000000";
-    }
 }
 
 //Used to translate date/time from geoJSON file
