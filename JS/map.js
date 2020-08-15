@@ -418,9 +418,3 @@ function zoomToUser() {
     });
 }
 
-//Used to translate date/time from geoJSON file
-//to human readable format
-function parseTime(epochDate) {
-    var date = new Date(epochDate)
-    return date.toLocaleString()
-}

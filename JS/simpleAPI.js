@@ -30,16 +30,9 @@ function findMax(features){
     return max;
 }
 
-/*Usage Instructions
-In your javascript code, call the function below using
-url_month, url_week, or url_day (more can be added from USGS site):
-    https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
-
-apiInfo(url_{month | week | year})
-    .then(data => {
-        **YOUR CODE GOES HERE**
-           console.log(data);     
-        }
-    })
-    .catch(reason => console.log(reason.message));
-*/
+//Used to translate date/time from geoJSON file
+//to human readable format
+function parseTime(epochDate) {
+    var date = new Date(epochDate)
+    return date.toLocaleString()
+}
