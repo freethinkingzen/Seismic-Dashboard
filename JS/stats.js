@@ -23,5 +23,6 @@ function showStats(url = url_day, url_sig = url_day_sig){
 
 }
 
-//Initialize id="quickStats"
+//Initialize id="quickStats" and update every 60s
 showStats();
+var statInterval = setInterval(function(){showStats()}, 60000);
