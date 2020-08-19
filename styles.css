@@ -142,12 +142,6 @@ footer {
     font-weight: bold;
 }
 
-@media only screen and (max-width: 992px){
-    #type-chart {
-        margin-top: 5px;
-    }
-}
-
 @media (max-width: 697px){
     #map {
         height: 30em;
