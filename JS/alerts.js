@@ -21,8 +21,8 @@ function activityFeed(){
                 toadd.classList.add("card");
                 toadd.setAttribute("key", feature.id);
                 details.classList.add("card-body");
-                details.innerHTML = "<b>Magnitude: " + feature.properties.mag.toFixed(2) +
-                                    "</b><br>" + feature.properties.place + "<br>" + parseTime(feature.properties.time);
+                details.innerHTML = parseTime(feature.properties.time) + "<br/><br/><b>Magnitude: " + feature.properties.mag.toFixed(2) +
+                                    "</b><br/>" + feature.properties.place;
                 //Intentional fall through of cases
                 switch (feature.properties.alert){
                     case "yellow":

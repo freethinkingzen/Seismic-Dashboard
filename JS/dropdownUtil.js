@@ -11,6 +11,7 @@ function changeToDay() {
     document.getElementById("showDay").classList.add("d-none");
     document.getElementById("showMonth").classList.remove("d-none");
     document.getElementById("showWeek").classList.remove("d-none");
+    document.getElementById("showMe").classList.remove("d-none");
     showStats(url_day, url_day_sig);
     displayDay();
 

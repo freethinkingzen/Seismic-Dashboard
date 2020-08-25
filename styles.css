@@ -1,16 +1,17 @@
 * {
     box-sizing: border-box;
 }
+
+body{
+    background-color: #000000;
+}
+
 .navbar-nav {
     margin-left: 1em;
 }
 .navbar-brand {
     float: left;
     font-size: 2em;
-}
-
-body{
-    background-color: #000000;
 }
 
 .card {
@@ -21,6 +22,16 @@ body{
     background-color: #343a40;
     border: solid #000000 3px;
     border-radius: 7px;
+}
+
+.infoPanel {
+    overflow-y: auto;
+    max-height: 100vh;
+}
+
+.mapLegend .text-primary {
+    font-size: 150%;
+    font-weight: bolder;
 }
 
 #quickStats {
@@ -54,7 +65,7 @@ body{
     font-size: 150%;
     font-weight: bolder;
     color:#000000;
-    background-image: linear-gradient(to right, green, rgb(0, 128, 79), #007bff,rgb(101, 67, 224), purple,red);
+    background-image: linear-gradient(to right, green, rgb(0, 128, 79), #007bff,rgb(101, 67, 224), rgb(128, 0, 128),red);
 }
 
 #depthScale {
@@ -63,10 +74,7 @@ body{
     font-size: 150%;
     background-image: linear-gradient(to right, rgb(0, 200, 255), #0000ff, #800080);
 }
-.mapLegend .text-primary {
-    font-size: 150%;
-    font-weight: bolder;
-}
+
 
 #activityPanel {
     margin-bottom: 1em;
@@ -77,29 +85,27 @@ body{
     overflow-x: hidden;
 }
 
-.infoPanel {
-    overflow-y: auto;
-    max-height: 100vh;
-}
-
 #mapTabs {
-    border-color: var(--primary);
+    border-color: var(--primary) rgb(255, 187, 0);
     margin-bottom: 1em;
 }
 
-#mapTabs .nav-link:not(.active) {
-    color: lightblue;
-    font-style: italic;
-    background-image: linear-gradient(var(--dark), var(--dark), #000000);
-    border-color: var(--primary);
+#hourlyPlot {
+    max-width: 100%;
 }
 
 #mapTabs .active {
     color: #ffffff;
     font-weight: bold;
-    background-color: #000000;
+    background-color: #000000 rgb(255,0,0);
     border-color: var(--primary);
     border-bottom-color: #000000;
+}
+#mapTabs .nav-link:not(.active) {
+    color: lightblue;
+    font-style: italic;
+    background-image: linear-gradient(var(--dark), var(--dark), #000000);
+    border-color: var(--primary);
 }
 
 #toggleBar .nav-link {
