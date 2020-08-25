@@ -76,13 +76,6 @@ var hourlyOptions = {
         width: 2
     },
     xaxis: {
-        title: {
-            text: "TIME",
-            style: {
-                color: "var(--primary)",
-                fontSize: "14px",
-            }
-        },
         labels: {
             style: {
                 colors: "#ffffff",
@@ -146,13 +139,6 @@ var dailyOptions = {
     },
     series: [],
     xaxis: {
-        title: {
-            text: "DATE",
-            style: {
-                color: "var(--primary)",
-                fontSize: "14px",
-            }
-        },
         labels: {
             style: {
                 colors: "#ffffff",

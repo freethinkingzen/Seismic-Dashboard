@@ -34,6 +34,11 @@ body{
     font-weight: bolder;
 }
 
+.chart {
+    margin-right: 1em;
+    margin-left: 1em;
+}
+
 #quickStats {
     max-height: 32em;
 }
@@ -151,5 +156,9 @@ footer {
 @media (max-width: 697px){
     #map {
         height: 30em;
+    }
+    .chart {
+        margin-right: 1em;
+        margin-left: 1em;
     }
 }
