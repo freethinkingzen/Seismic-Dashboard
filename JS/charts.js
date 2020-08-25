@@ -106,31 +106,17 @@ var hourlyOptions = {
         }
     },
     tooltip: {
+        theme: "dark",
         x: {
             show: false,
         },
         y: {
             title: {
-            formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
-                return locations[dataPointIndex] + "<br /><b>Magnitude: <b/>";
+                formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+                    return locations[dataPointIndex] + "<br /><b>Magnitude: <b/>";
+                }
             }
         }
-        }
-
-       /* custom: function({ series, seriesIndex, dataPointIndex, w }) {
-            return (
-                '<div class="arrow_box">' +
-                "<span>" +
-                "Magnitude " + series[seriesIndex][dataPointIndex]
-                 +
-                "<br />" +
-                locations[dataPointIndex]
-                 +
-                "</span>" +
-                "</div>"
-            );
-        }
-        */
     },
     noData: {
         text: "Loading..."
@@ -188,6 +174,9 @@ var dailyOptions = {
                 fontSize: "12px"
             }
         }
+    },
+    tooltip: {
+        theme: "dark"
     },
     noData: {
         text: "Loading..."
