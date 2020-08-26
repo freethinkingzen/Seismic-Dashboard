@@ -34,11 +34,6 @@ body{
     font-weight: bolder;
 }
 
-.chart {
-    margin-right: 1em;
-    margin-left: 1em;
-}
-
 #quickStats {
     max-height: 32em;
 }
@@ -95,14 +90,10 @@ body{
     margin-bottom: 1em;
 }
 
-#hourlyPlot {
-    max-width: 100%;
-}
-
 #mapTabs .active {
     color: #ffffff;
     font-weight: bold;
-    background-color: #000000 rgb(255,0,0);
+    background-color: #000000;
     border-color: var(--primary);
     border-bottom-color: #000000;
 }

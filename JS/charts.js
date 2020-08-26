@@ -15,9 +15,6 @@ function hourlyChartUpdate(){
             name: "Magnitude",
             data: hourlyQuakes.reverse(),
         }])
-        hourlyChart.updateOptions([{
-
-        }])
     })
     .catch(reason => console.log(reason.message));
 }
@@ -46,6 +43,36 @@ function quakesPerDayUpdate(){
         }])
     })
     .catch(reason => console.log(reason.message));
+}
+
+var small = 0;
+var mild = 0;
+var moderate = 0;
+var severe = 0;
+function donutUpdate(){
+    small = 0;
+    mild = 0;
+    moderate = 0;
+    severe = 0;
+    apiInfo(url_week)
+    .then(data => {
+        for(feature of data.features){
+            if(feature.properties.mag <= 2){
+                ++small;
+            }
+            else if(feature.properties.mag > 2 && feature.properties.mag < 5){
+                ++mild;
+            }
+            else if(feature.properties.mag >=5 && feature.properties.mag < 8){
+                ++moderate;
+            }
+            else if(feature.properties.mag >=8){
+                ++severe;
+            }
+        }
+        magDonut.updateSeries([small, mild, moderate, severe]);
+    })
+    .catch(reason => console.log(reason.mesage));
 }
 
 var hourlyOptions = {
@@ -169,12 +196,33 @@ var dailyOptions = {
     }
 }
 
-var hourlyChart = new ApexCharts(document.getElementById("hourlyPlot"), hourlyOptions);
-hourlyChart.render();
 
-var quakeCountChart = new ApexCharts(document.getElementById("dailyPlot"), dailyOptions);
-quakeCountChart.render();
+var magDonutOptions = {
+    chart: {
+        type: "donut"
+    },
+    series: [],
+    labels: ["small: < 2.0", "mild: 2 - 5", "moderate: 5 - 8", "severe: > 8"],
+    colors: ["rgb(0, 255, 50)", "rgb(0,100,255)", "rgb(128, 0, 128)", "rgb(255, 0, 0"],
+    dataLabels: {
+    },
+}
 
-hourlyChartUpdate();
-quakesPerDayUpdate();
-var chartInterval = setInterval(function(){hourlyChartUpdate();quakesPerDayUpdate();}, 60000);
+if(document.getElementById("hourlyPlot") && document.getElementById("dailyPlot")){
+    var hourlyChart = new ApexCharts(document.getElementById("hourlyPlot"), hourlyOptions);
+    hourlyChart.render();
+
+    var quakeCountChart = new ApexCharts(document.getElementById("dailyPlot"), dailyOptions);
+    quakeCountChart.render();
+
+    hourlyChartUpdate();
+    quakesPerDayUpdate();
+    var chartInterval = setInterval(function(){hourlyChartUpdate();quakesPerDayUpdate();}, 60000);
+}
+
+if(document.getElementById("magDonut")){
+    var magDonut = new ApexCharts(document.getElementById("magDonut"), magDonutOptions);
+    magDonut.render();
+
+    donutUpdate();
+}
