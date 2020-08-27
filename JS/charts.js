@@ -3,7 +3,7 @@ var hourlyQuakes = [];
 var dailyQuakeData = [];
 var locations = [];
 
-function hourlyChartUpdate(){
+function magnitudeChartUpdate(){
     hourlyQuakes = [];
     apiInfo(url_hour)
     .then(data => {
@@ -19,7 +19,7 @@ function hourlyChartUpdate(){
     .catch(reason => console.log(reason.message));
 }
 
-function quakesPerDayUpdate(){
+function quakesPerUpdate(){
     dailyQuakeData = [];
     apiInfo(url_week)
     .then(data => {
@@ -49,12 +49,12 @@ var small = 0;
 var mild = 0;
 var moderate = 0;
 var severe = 0;
-function donutUpdate(){
+function magDonutUpdate(){
     small = 0;
     mild = 0;
     moderate = 0;
     severe = 0;
-    apiInfo(url_week)
+    apiInfo(url_month)
     .then(data => {
         for(feature of data.features){
             if(feature.properties.mag <= 2){
@@ -108,13 +108,13 @@ var hourlyOptions = {
                 colors: "#ffffff",
                 fontSize: "12px",
             }
-        }
+        },
     },
     yaxis: {
         title: {
             text: "MAGNITUDE",
             style: {
-                color: "var(--primary)",
+                color: "rgb(0, 180, 255)",
                 fontSize: "14px",
             }
         },
@@ -149,7 +149,7 @@ var dailyOptions = {
             show: false
         },
         type: "bar",
-        height: '300'
+        height: '250'
     },
     fill: {
         colors: "rgb(255, 150, 0)",
@@ -177,7 +177,7 @@ var dailyOptions = {
         title: {
             text: "TOTAL QUAKES",
             style: {
-                color: "var(--primary)",
+                color: "rgb(0, 180, 255)",
                 fontSize: "14px",
             }
         },
@@ -199,30 +199,61 @@ var dailyOptions = {
 
 var magDonutOptions = {
     chart: {
-        type: "donut"
+        type: "donut",
+        foreColor: "#ffffff",
+        width: 350
+    },
+    stroke: {
+        width: 1,
+        colors: "var(--dark)"
     },
     series: [],
-    labels: ["small: < 2.0", "mild: 2 - 5", "moderate: 5 - 8", "severe: > 8"],
-    colors: ["rgb(0, 255, 50)", "rgb(0,100,255)", "rgb(128, 0, 128)", "rgb(255, 0, 0"],
+    labels: [" Less Than 2.0", " 2.0 to 4.9", " 5.0 to 7.9", " Greater Than 8.0"],
+    colors: ["rgb(0, 255, 50)", "rgb(0,100,255)", "rgb(250, 0, 250)", "rgb(255, 0, 0)"],
     dataLabels: {
+        enabled: false
     },
+    plotOptions: {
+        pie: {
+            donut: {
+                labels: {
+                    show: true,
+                    name: {
+                        show: true,
+                        color: "#ffffff"
+                    },
+                    value: {
+                        show: true,
+                        color: "#ffffff"
+                    },
+                    total: {
+                        show: true,
+                        color: "#ffffff"
+                    }
+                },
+            }
+        }
+    },
+    tooltip: {
+        enabled: false
+    }
 }
 
-if(document.getElementById("hourlyPlot") && document.getElementById("dailyPlot")){
-    var hourlyChart = new ApexCharts(document.getElementById("hourlyPlot"), hourlyOptions);
+if(document.getElementById("magnitudesPlot") && document.getElementById("quakesPerPlot")){
+    var hourlyChart = new ApexCharts(document.getElementById("magnitudesPlot"), hourlyOptions);
     hourlyChart.render();
 
-    var quakeCountChart = new ApexCharts(document.getElementById("dailyPlot"), dailyOptions);
+    var quakeCountChart = new ApexCharts(document.getElementById("quakesPerPlot"), dailyOptions);
     quakeCountChart.render();
 
-    hourlyChartUpdate();
-    quakesPerDayUpdate();
-    var chartInterval = setInterval(function(){hourlyChartUpdate();quakesPerDayUpdate();}, 60000);
+    magnitudeChartUpdate();
+    quakesPerUpdate();
+    var chartInterval = setInterval(function(){magnitudeChartUpdate();quakesPerUpdate();}, 60000);
 }
 
 if(document.getElementById("magDonut")){
     var magDonut = new ApexCharts(document.getElementById("magDonut"), magDonutOptions);
     magDonut.render();
 
-    donutUpdate();
+    magDonutUpdate();
 }
