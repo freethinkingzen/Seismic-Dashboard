@@ -71,14 +71,31 @@
     </header>
 
     <div class="container-fluid content">
+        <h3 class="text-center text-primary border border-primary rounded p-2 mb-0 mt-2">Magnitudes and Depths</h3>
         <div class="row">
-            <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
-                <h3 class="text-center text-primary border border-primary rounded p-2 mb-0 mt-2">Magnitudes - Past Month</h3>
-                <div class="align-items-center card" id="magDonut"></div>
+            <div class="col-12 col-md-6">
+                <div class="align-items-center card">
+                  <h3 class="text-light">Magnitudes - Past Month</h3>
+                  <div id="magDonut"></div>
+                </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-7">
-                <h3 class="text-center text-primary border border-primary rounded p-2 mb-0 mt-2">Magnitudes - Past Hour</h3>
-                <div class="card" id="magnitudesPlot"></div>
+            <div class="col-12 col-md-6">
+                <div class="align-items-center card">
+                  <h3 class="text-light">Depths - Past Month</h3>
+                  <div id="depthDonut"></div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="card">
+                <h3 class="text-light">Magnitudes - Past Hour</h3>
+                <div id="magnitudesPlot"></div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="card">
+                <h3 class="text-light">Depths - Past Hour</h3>
+                <div id="depthsPlot"></div>
+              </div>
             </div>
         </div>
         <div class="row">
