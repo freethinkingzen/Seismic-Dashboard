@@ -6,11 +6,12 @@ var locations = [];
 
 function magnitudeChartUpdate(){
     hourlyQuakes = [];
+    quakeDepths =[];
     apiInfo(url_hour)
     .then(data => {
         for(feature of data.features){
-            hourlyQuakes.push({x: parseTime(feature.properties.time), y: feature.properties.mag.toFixed(2)})
-            quakeDepths.push({x: parseTime(feature.properties.time), y: feature.geometry.coordinates[2]})
+            hourlyQuakes.push({x: parseTime(feature.properties.time), y: feature.properties.mag.toFixed(1)})
+            quakeDepths.push({x: parseTime(feature.properties.time), y: feature.geometry.coordinates[2].toFixed(1)})
             locations.push(feature.properties.place);
         }
         if(document.getElementById("magnitudesPlot")){
