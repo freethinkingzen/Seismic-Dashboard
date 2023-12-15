@@ -19,7 +19,7 @@ map.fitBounds([[70,-160],[-70, 160]]).invalidateSize();
 let ctr = map.getCenter();
 
 //Add map tile to container using Stamen Tile
-var map_layer = new L.StamenTileLayer("toner");
+var map_layer = new L.tileLayer("https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{r}.png")
 map.addLayer(map_layer);
 //Add a layer to hold current markers
 var current = L.layerGroup().addTo(map);
